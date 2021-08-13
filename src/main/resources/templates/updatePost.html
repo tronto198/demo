@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 수정</title>
+</head>
+<body>
+  <h3>게시물 수정</h3>
+  <div>
+      <a href="javascript:history.back()">돌아가기</a>
+  </div>
+  <form method="post" th:action="@{'/post/' + ${post.id}}">
+      <div>
+          <label for="title">제목: </label>
+          <input type="title" th:value="${post.title}" name="title"/>
+      </div>
+      <div>
+          <label for="contents">내용: </label>
+          <textarea type="contents" th:text="${post.contents}" name="contents"></textarea>
+      </div>
+      <div>
+          <input type="hidden" name="_method" value="put">
+          <button>수정</button>
+      </div>
+  </form>
+</body>
+</html>

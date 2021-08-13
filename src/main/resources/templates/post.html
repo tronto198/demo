@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}"> </title>
+</head>
+<body>
+<div>
+    <a href="javascript:history.back()">돌아가기</a>
+    <form name="삭제" method="post" th:action="@{'/post/' + ${post.id}}">
+        <input type="hidden" name="_method" value="DELETE">
+        <button>삭제하기</button>
+    </form>
+    <form name="수정" method="get" th:action="@{'/post/update/' + ${post.id}}">
+        <button>수정하기</button>
+    </form>
+</div>
+<tr th:object="${post}">
+    <h3 th:text="*{title}"> </h3>
+    <div th:text="*{contents}"></div>
+</tr>
+</body>
+</html>

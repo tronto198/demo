@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>새로운 게시물</title>
+</head>
+<body>
+  <h3>게시물 작성</h3>
+  <div>
+    <a href="javascript:history.back()">돌아가기</a>
+  </div>
+  <form method="post" th:action="@{/post}">
+      <div>
+          <label for="title">제목: </label>
+          <input type="title" name="title"/>
+      </div>
+      <div>
+          <label for="contents">내용: </label>
+          <textarea type="contents" name="contents"></textarea>
+      </div>
+      <div>
+          <button type="submit">만들기</button>
+      </div>
+  </form>
+</body>
+</html>

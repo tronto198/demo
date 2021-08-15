@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.Config;
 import com.example.demo.dto.PostCreateRequestDto;
 import com.example.demo.dto.PostGetResponseDto;
 import com.example.demo.dto.PostListResponseDto;
@@ -12,14 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
 
 /*
 	타임리프 관련 ref : https://sidepower.tistory.com/145
@@ -54,12 +47,12 @@ public class PostController {
 							 @RequestPart(value = "image", required = false) MultipartFile image,
 							 @RequestPart(value = "video", required = false) MultipartFile video,
 							 PostUpdateRequestDto data) {
-		if(data.isImageChanged()) {
+		if (data.isImageChanged()) {
 			String imagePath = imageService.saveImage(image);
 			data.setImagePath(imagePath);
 		}
 
-		if(data.isVideoChanged()){
+		if (data.isVideoChanged()) {
 			String videoPath = videoService.saveVideo(video);
 			data.setVideoPath(videoPath);
 		}

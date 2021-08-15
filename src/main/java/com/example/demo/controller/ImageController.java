@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.service.ImageService;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller
@@ -20,7 +20,7 @@ public class ImageController {
 
 	@CrossOrigin
 	@GetMapping(value = "image/{path}",
-	produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE})
+		produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE})
 	public ResponseEntity<byte[]> getImage(@PathVariable String path) {
 		try {
 			byte[] data = imageService.getImage(path);

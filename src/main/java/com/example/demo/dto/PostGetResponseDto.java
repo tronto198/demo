@@ -14,7 +14,7 @@ public class PostGetResponseDto {
 	public String imagePath;
 	public String videoPath;
 
-	public PostGetResponseDto(Post post){
+	public PostGetResponseDto(Post post) {
 		this.id = post.getId();
 		this.title = post.getTitle();
 		this.contents = post.getContents();

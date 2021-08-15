@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.UUID;
 
@@ -14,17 +13,17 @@ public class ImageService {
 	public String saveImage(
 		MultipartFile image
 	) {
-		if(image != null && !image.isEmpty()){
+		if (image != null && !image.isEmpty()) {
 			try {
 				String imagePath = UUID.randomUUID().toString();
 				File file = new File(Config.imageRootPath + File.separator + imagePath);
-				if(file.getParentFile() != null)
+				if (file.getParentFile() != null)
 					file.getParentFile().mkdirs();
 				FileCopyUtils.copy(image.getBytes(), file);
 				return imagePath;
-			} catch (IOException e){
+			} catch (IOException e) {
 				// ignore
-				System.out.println("error - "+e.toString());
+				System.out.println("error - " + e.toString());
 			}
 		}
 		return null;

@@ -5,49 +5,50 @@
     <title>게시퍈</title>
 </head>
 <body>
-  <h3>게시판</h3>
-  <div>
-      <a href="/">돌아가기</a>
-      <a href="/post/new">새 게시물</a>
-  </div>
-  <div>
-      <label>page: <span th:text="${data.page}"></span></label>
-      <label>pageSize: <span th:text="${data.pageSize}"></span></label>
-  </div>
-  <table>
-      <thead>
-        <th>ID</th>
-        <th>이미지</th>
-        <th>제목</th>
-        <th>삭제</th>
-      </thead>
-      <tbody>
-      <tr th:each="post: ${data.posts}">
-          <td>
-              <a th:href="@{'/post/' + ${post.id}}">
-                  <span th:text="${post.id}"></span>
-              </a>
-          </td>
-          <td>
-              <img th:if="${post.imagePath} != null" th:src="@{'/image/' + ${post.imagePath}}" style="height: 50px"/>
-          </td>
-          <td>
-              <a th:href="@{'/post/' + ${post.id}}">
-                  <span th:text="${post.title}"></span>
-              </a>
-          </td>
-          <td>
-              <form name="삭제" method="post" th:action="@{'/post/' + ${post.id}}">
-                  <input type="hidden" name="_method" value="DELETE">
-                  <button>삭제</button>
-              </form>
-          </td>
-      </tr>
-      </tbody>
-  </table>
+<h3>게시판</h3>
+<div>
+    <a href="/">돌아가기</a>
+    <a href="/post/new">새 게시물</a>
+</div>
+<div>
+    <label>page: <span th:text="${data.page}"></span></label>
+    <label>pageSize: <span th:text="${data.pageSize}"></span></label>
+</div>
+<table>
+    <thead>
+    <th>ID</th>
+    <th>이미지</th>
+    <th>제목</th>
+    <th>삭제</th>
+    </thead>
+    <tbody>
+    <tr th:each="post: ${data.posts}">
+        <td>
+            <a th:href="@{'/post/' + ${post.id}}">
+                <span th:text="${post.id}"></span>
+            </a>
+        </td>
+        <td>
+            <img th:if="${post.imagePath} != null" th:src="@{'/image/' + ${post.imagePath}}" style="height: 50px"/>
+        </td>
+        <td>
+            <a th:href="@{'/post/' + ${post.id}}">
+                <span th:text="${post.title}"></span>
+            </a>
+        </td>
+        <td>
+            <form name="삭제" method="post" th:action="@{'/post/' + ${post.id}}">
+                <input type="hidden" name="_method" value="DELETE">
+                <button>삭제</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 <div>
-    <a th:if="${data.hasPrevious}" th:href="@{/post?page={page}&size={size}(page=${data.page - 1}, size=${data.pageSize})}">이전</a>
+    <a th:if="${data.hasPrevious}"
+       th:href="@{/post?page={page}&size={size}(page=${data.page - 1}, size=${data.pageSize})}">이전</a>
     <a th:if="${data.hasNext}" th:href="@{/post?page={page}&size={size}(page=${data.page + 1}, size=${data.pageSize})}">다음</a>
 </div>
 </body>

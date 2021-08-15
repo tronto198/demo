@@ -8,12 +8,9 @@ import com.example.demo.model.Post;
 import com.example.demo.repo.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +35,7 @@ public class PostService {
 	public PostListResponseDto getAllPost(Pageable pageable) {
 		Page<Post> posts = repository.findAll(pageable);
 		List<PostGetResponseDto> results = new ArrayList<>();
-		for(Post post : posts){
+		for (Post post : posts) {
 			results.add(new PostGetResponseDto(post));
 		}
 

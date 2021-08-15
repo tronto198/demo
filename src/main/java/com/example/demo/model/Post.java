@@ -45,9 +45,9 @@ public class Post {
 	) {
 		this.title = title;
 		this.contents = contents;
-		if(imageChanged)
+		if (imageChanged)
 			this.imagePath = imagePath;
-		if(videoChanged)
+		if (videoChanged)
 			this.videoPath = videoPath;
 	}
 

@@ -4,10 +4,12 @@ import com.example.demo.Config;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.util.UUID;
 
 @Service
@@ -20,17 +22,17 @@ public class VideoService {
 	public String saveVideo(
 		MultipartFile video
 	) {
-		if(video != null && !video.isEmpty()){
+		if (video != null && !video.isEmpty()) {
 			try {
 				String videoPath = UUID.randomUUID().toString();
 				File file = new File(Config.videoRootPath + File.separator + videoPath);
-				if(file.getParentFile() != null)
+				if (file.getParentFile() != null)
 					file.getParentFile().mkdirs();
 				FileCopyUtils.copy(video.getBytes(), file);
 				return videoPath;
-			} catch (IOException e){
+			} catch (IOException e) {
 				// ignore
-				System.out.println("error - "+e.toString());
+				System.out.println("error - " + e.toString());
 			}
 		}
 		return null;
@@ -39,9 +41,10 @@ public class VideoService {
 	/**
 	 * 비디오 파일은 한번에 읽기에 부담이 되므로 일정 부분씩 끊어서 읽음
 	 * 그 과정에서 서버가 응답하는 부분이 구현된 함수
-	 * @param path 비디오 파일 경로
+	 *
+	 * @param path  비디오 파일 경로
 	 * @param range 클라이언트가 요청한 부분
-	 * @param res 해당 요청에 대한 Response 객체
+	 * @param res   해당 요청에 대한 Response 객체
 	 */
 	public void readVideo(String path, String range, HttpServletResponse res) {
 		String separator = "-";
@@ -54,17 +57,16 @@ public class VideoService {
 			boolean isPart = false;
 
 			long videoSize = rFile.length();
-			if(range != null){
-				if(range.endsWith(separator)){
+			if (range != null) {
+				if (range.endsWith(separator)) {
 					range = range + (videoSize - 1);
 				}
 				int idx = range.trim().indexOf(separator);
 				rangeStart = Long.parseLong(range.substring(6, idx));
 				rangeEnd = Long.parseLong(range.substring(idx + 1));
-				if(rangeStart > 0)
+				if (rangeStart > 0)
 					isPart = true;
-			}
-			else {
+			} else {
 				rangeStart = 0;
 				rangeEnd = videoSize - 1;
 			}
@@ -81,7 +83,7 @@ public class VideoService {
 
 			int bufferSize = 2048;
 			byte[] data = new byte[bufferSize];
-			while (partSize > 0){
+			while (partSize > 0) {
 				int chunk = partSize > bufferSize ? bufferSize : (int) partSize;
 				int read = rFile.read(data, 0, chunk);
 				os.write(data, 0, read);

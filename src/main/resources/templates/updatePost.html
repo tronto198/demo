@@ -5,23 +5,92 @@
     <title>게시물 수정</title>
 </head>
 <body>
-  <h3>게시물 수정</h3>
-  <div>
-      <a href="javascript:history.back()">돌아가기</a>
-  </div>
-  <form method="post" th:action="@{'/post/' + ${post.id}}">
-      <div>
-          <label for="title">제목: </label>
-          <input type="title" th:value="${post.title}" name="title"/>
-      </div>
-      <div>
-          <label for="contents">내용: </label>
-          <textarea type="contents" th:text="${post.contents}" name="contents"></textarea>
-      </div>
-      <div>
-          <input type="hidden" name="_method" value="put">
-          <button>수정</button>
-      </div>
-  </form>
+<h3>게시물 수정</h3>
+<div>
+    <a href="javascript:history.back()">돌아가기</a>
+</div>
+<form method="post" th:action="@{'/post/' + ${post.id}}" enctype="multipart/form-data">
+    <div>
+        <label for="title">제목: </label>
+        <input type="title" th:value="${post.title}" name="title"/>
+    </div>
+    <div>
+        <label for="contents">내용: </label>
+        <textarea type="contents" th:text="${post.contents}" name="contents"></textarea>
+    </div>
+    <div>
+        <label>사진 수정: </label>
+        <input id="img-change" type="hidden" name="imageChanged" value="false"/>
+        <input id="img-selector" type="file" name="image" accept="image/*" onchange="setThumbnail(event);">
+        <button type="button" onclick="removeThumbnail();">사진 삭제</button>
+        <div id="image-viewer">
+            <img th:if="${post.imagePath} != null" th:src="@{'/image/' + ${post.imagePath}}" style="height: 300px"/>
+        </div>
+    </div>
+    <div>
+        <label>비디오 수정: </label>
+        <input id="video-change" type="hidden" name="videoChanged" value="false"/>
+        <input id="video-selector" type="file" name="video" accept="video/mp4" onchange="changeVideo();">
+        <button type="button" onclick="removeVideo();">비디오 삭제</button>
+        <div id="video-viewer">
+            <video type="video/mp4" controls th:if="${post.videoPath} != null" th:src="@{'/video/' + ${post.videoPath}}" style="height: 300px"></video>
+        </div>
+    </div>
+    <div>
+        <input type="hidden" name="_method" value="put">
+        <button>수정</button>
+    </div>
+</form>
+<script>
+    function changeVideo() {
+        let elem = document.getElementById("video-change");
+        elem.value = true;
+        console.log(elem);
+    }
+
+    function removeVideo() {
+        changeVideo();
+        let selector = document.getElementById("video-selector");
+        selector.value = "";
+        let body = document.querySelector("div#video-viewer");
+        let orgImg = body.querySelector("video");
+        if (orgImg != null) {
+            body.removeChild(orgImg);
+            alert("비디오 삭제됨");
+        }
+    }
+
+    function setThumbnail(event) {
+        let elem = document.getElementById("img-change");
+        elem.value = true;
+        for (var image of event.target.files) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var img = document.createElement("img");
+                img.setAttribute("src", event.target.result);
+                img.setAttribute("style", "height: 300px");
+                let body = document.querySelector("div#image-viewer");
+                let orgImg = body.querySelector("img");
+                if (orgImg != null) {
+                    body.removeChild(orgImg);
+                }
+                body.appendChild(img);
+            };
+            reader.readAsDataURL(image);
+        }
+    }
+
+    function removeThumbnail() {
+        let elem = document.getElementById("img-change");
+        elem.value = true;
+        let selector = document.getElementById("img-selector");
+        selector.value = "";
+        let body = document.querySelector("div#image-viewer");
+        let orgImg = body.querySelector("img");
+        if (orgImg != null) {
+            body.removeChild(orgImg);
+        }
+    }
+</script>
 </body>
 </html>

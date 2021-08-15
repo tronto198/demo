@@ -11,9 +11,14 @@ public class PostGetResponseDto {
 	public String title;
 	public String contents;
 
+	public String imagePath;
+	public String videoPath;
+
 	public PostGetResponseDto(Post post){
 		this.id = post.getId();
 		this.title = post.getTitle();
 		this.contents = post.getContents();
+		this.imagePath = post.getImagePath();
+		this.videoPath = post.getVideoPath();
 	}
 }

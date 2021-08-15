@@ -11,7 +11,11 @@ public class PostCreateRequestDto {
 	private String title;
 	private String contents;
 
+	private String imagePath;
+	private String videoPath;
+
 	public Post toEntity() {
-		return new Post(title, contents);
+		Post post = new Post(title, contents, imagePath, videoPath);
+		return post;
 	}
 }

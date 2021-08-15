@@ -15,9 +15,11 @@
         <button>수정하기</button>
     </form>
 </div>
-<tr th:object="${post}">
-    <h3 th:text="*{title}"> </h3>
-    <div th:text="*{contents}"></div>
-</tr>
+<h3 th:text = "${post.title}"></h3>
+<div th:text="${post.contents}"></div>
+<img th:if="${post.imagePath} != null" th:src="@{'/image/' + ${post.imagePath}}" style="height: 300px"/>
+<div id="video-viewer">
+    <video type="video/mp4" controls th:if="${post.videoPath} != null" th:src="@{'/video/' + ${post.videoPath}}" style="height: 300px"></video>
+</div>
 </body>
 </html>

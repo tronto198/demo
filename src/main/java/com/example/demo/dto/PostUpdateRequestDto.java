@@ -13,5 +13,8 @@ import lombok.Setter;
 public class PostUpdateRequestDto {
 	private String title;
 	private String contents;
-
+	private String imagePath;
+	private boolean imageChanged;
+	private String videoPath;
+	private boolean videoChanged;
 }

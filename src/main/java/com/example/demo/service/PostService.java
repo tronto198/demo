@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class PostService {
 			new IllegalArgumentException(("해당 아이디의 게시물이 없습니다."))
 		);
 
-		post.update(dto.getTitle(), dto.getContents());
+		post.update(dto.getTitle(), dto.getContents(), dto.getImagePath(), dto.isImageChanged(), dto.getVideoPath(), dto.isVideoChanged());
 
 		return post.getId();
 	}

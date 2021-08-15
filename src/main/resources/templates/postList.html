@@ -17,6 +17,7 @@
   <table>
       <thead>
         <th>ID</th>
+        <th>이미지</th>
         <th>제목</th>
         <th>삭제</th>
       </thead>
@@ -26,6 +27,9 @@
               <a th:href="@{'/post/' + ${post.id}}">
                   <span th:text="${post.id}"></span>
               </a>
+          </td>
+          <td>
+              <img th:if="${post.imagePath} != null" th:src="@{'/image/' + ${post.imagePath}}" style="height: 50px"/>
           </td>
           <td>
               <a th:href="@{'/post/' + ${post.id}}">

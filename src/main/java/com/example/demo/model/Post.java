@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,13 +23,33 @@ public class Post {
 	private String title;
 	private String contents;
 
-	public Post(String title, String contents) {
+	@Setter
+	private String imagePath;
+
+	@Setter
+	private String videoPath;
+
+	public Post(String title, String contents, String imagePath, String videoPath) {
 		this.title = title;
 		this.contents = contents;
+		this.imagePath = imagePath;
+		this.videoPath = videoPath;
 	}
 
-	public void update(String title, String contents) {
+	public void update(String title,
+					   String contents,
+					   String imagePath,
+					   boolean imageChanged,
+					   String videoPath,
+					   boolean videoChanged
+	) {
 		this.title = title;
 		this.contents = contents;
+		if(imageChanged)
+			this.imagePath = imagePath;
+		if(videoChanged)
+			this.videoPath = videoPath;
 	}
+
 }
+
